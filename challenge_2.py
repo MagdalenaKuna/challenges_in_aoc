@@ -1,28 +1,28 @@
 file = open('day2.txt', 'r')
 lines = file.readlines()
-max_colours = {'red': 12, 'blue': 14, 'green': 13}
 
-games_table = []
-single_game = []
-game_dict = {}
+games_powers = []
+single_game_power = 1
 
 for line in lines:
-    valid_game = True
+    game_dict = {}
+    single_game_power = 1
     game_number, rest = line.split(': ')
     games = rest.split('; ')
     for i in range(len(games)):
         game = games[i].split(', ')
         for j in range(len(game)):
             n, k = game[j].split()
-            game_dict[k] = int(n)
-            if game_dict[k] > max_colours[k]:
-                valid_game = False
+            if game_dict.get(k, 0):
+                if game_dict[k] < int(n):
+                    game_dict[k] = int(n)
+            else:
+                game_dict[k] = int(n)
 
-    if valid_game:
-        game_text, game_num = game_number.split()
-        games_table.append(int(game_num))
+    for k, v in game_dict.items():
+        single_game_power *= v
 
-for i in range(len(games_table)):
-    print(type(games_table[i]))
+    games_powers.append(single_game_power)
 
-print(sum(games_table))
+print(games_powers)
+print(sum(games_powers))
