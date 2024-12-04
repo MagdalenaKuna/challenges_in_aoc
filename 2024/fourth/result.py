@@ -1,6 +1,7 @@
 
 xmas_occurence = 0
 is_time_to_end = False
+middle_indexes = []
 
 with open('input.txt') as file:
     #f= file.read()
@@ -46,10 +47,22 @@ with open('input.txt') as file:
                 if counter_column + 3 < column and counter_row + 3 < row:
                     if f[counter_column+1][counter_row+1]+f[counter_column+2][counter_row+2]+f[counter_column+3][counter_row+3] == 'MAS':
                         xmas_occurence += 1
-
+            if f[counter_column][counter_row] == 'A':
+                if counter_row - 1 >= 0 and counter_column - 1 >= 0 and counter_row + 1 < row and counter_column + 1 < column:
+                    if f[counter_column-1][counter_row-1] == 'S' and f[counter_column+1][counter_row+1] == 'M':
+                        middle_indexes.append((counter_column,counter_row))
+                    if f[counter_column-1][counter_row-1] == 'M' and f[counter_column+1][counter_row+1] == 'S':
+                        middle_indexes.append((counter_column,counter_row))
+                    if f[counter_column+1][counter_row-1] == 'S' and f[counter_column-1][counter_row+1] == 'M':
+                        middle_indexes.append((counter_column,counter_row))
+                    if f[counter_column+1][counter_row-1] == 'M' and f[counter_column-1][counter_row+1] == 'S':
+                        middle_indexes.append((counter_column,counter_row))
+                
             counter_row += 1
         counter_column += 1
         counter_row = 0
 
 print('xmas_occurence: ',xmas_occurence)
-
+print(len(middle_indexes))
+print(len(set(middle_indexes)))
+print(len(middle_indexes) - len(set(middle_indexes)))
