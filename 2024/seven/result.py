@@ -18,6 +18,7 @@ with open('input.txt') as file:
         equation = []
         equation_final= []
         for number in rest.split():
+            equation_final = []
             number = int(number)
             if not equation:
                 equation.append(number)
